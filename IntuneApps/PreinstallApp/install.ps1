@@ -3,8 +3,8 @@
 # ==========================
 $ErrorActionPreference = "Stop"
 
-$LogDir = "C:\ProgramData\MyCompany\Logs"
-$LogFile = "$LogDir\intune-install.log"
+$LogDir = "C:\ProgramData\IntuneApps\Logs"
+$LogFile = "$LogDir\intune-preinstall.log"
 
 New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
 
@@ -18,8 +18,6 @@ function Log {
 
 $TempDir = $env:TEMP
 Log "TempDir: $TempDir"
-Log "TempDir: $TempDir"
-
 
 if (!(Test-Path $TempDir)) {
     Log "TempDir does not exist. Creating..."
@@ -104,34 +102,12 @@ try {
         } else {
             Log "PATH already contains dotnet"
         }
+
+        Log ".NET INSTALLED SUCCESSFULLY"
     } else {
         Log ".NET already installed — skipping"
     }
     
-    if (-not (Test-CommandExists "git")) {
-        Log "Installing Git..."
-
-        $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/git-for-windows/git/releases/latest"
-        $asset = $rel.assets | Where-Object { $_.name -match '64-bit\.exe$' } | Select-Object -First 1
-
-        if (-not $asset) {
-            throw "Cannot find Git installer"
-        }
-
-        $gitInstaller = Join-Path $TempDir $asset.name
-
-        Download-File `
-            -Url $asset.browser_download_url `
-            -OutFile $gitInstaller
-
-        Install-Exe `
-            -File $gitInstaller `
-            -Arguments "/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS"
-    } else {
-        Log "Git already installed — skipping"
-    }
-
-    Log "ALL COMPONENTS INSTALLED SUCCESSFULLY"
     exit 0
 
 } catch {

@@ -4,11 +4,10 @@
 ) -join ';'
 
 $dotnet = Get-Command dotnet.exe -CommandType Application -ErrorAction SilentlyContinue
-$git = Get-Command git.exe -CommandType Application -ErrorAction SilentlyContinue
 
-if (-not $dotnet -or -not $git) {
+if (-not $dotnet) {
     exit 1
 }
 
-Write-Output 'Detected: dotnet and git'
+Write-Output 'Detected: dotnet'
 exit 0
