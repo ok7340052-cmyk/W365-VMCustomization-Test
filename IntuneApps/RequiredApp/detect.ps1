@@ -9,4 +9,5 @@ if (-not $git) {
 }
 
 Write-Output 'Detected: git'
+Write-Output 'updated'
 exit 0

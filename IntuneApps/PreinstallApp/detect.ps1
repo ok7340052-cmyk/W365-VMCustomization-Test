@@ -9,5 +9,6 @@ if (-not $dotnet) {
     exit 1
 }
 
+Write-Output 'updated'
 Write-Output 'Detected: dotnet'
 exit 0
