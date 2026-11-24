@@ -17,7 +17,7 @@ function Log {
 
 $TempDir = $env:TEMP
 Log "TempDir: $TempDir"
-
+Log "TempDir: $TempDir"
 function Test-CommandExists {
     param([string]$cmd)
     $exists = [bool](Get-Command $cmd -ErrorAction SilentlyContinue)
